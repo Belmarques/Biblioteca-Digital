@@ -4,7 +4,7 @@ import { ReturnBookUseCase } from "@/use-case/book/returne-book";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";
 
-export async function returnBook(request: FastifyRequest, reply: FastifyReply) {
+export async function returnedBook(request: FastifyRequest, reply: FastifyReply) {
   try {
     // Verifica JWT
     await request.jwtVerify();

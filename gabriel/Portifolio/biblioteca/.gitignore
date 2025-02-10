@@ -1,2 +1,14 @@
-node_modules
+# Ignorar dependências e builds
+node_modules/
+build/
+dist/
+package-lock.json
+
+# Ignorar arquivos de ambiente
 .env
+.env.example
+
+# Ignorar configurações locais
+.vscode/
+.idea/
+.DS_Store

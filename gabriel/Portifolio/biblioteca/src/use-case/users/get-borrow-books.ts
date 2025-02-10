@@ -1,7 +1,6 @@
 import { UserRepository } from '@/repositories/user-repository'
-import type { Book, Loan, User } from '@prisma/client'
+import type {  Loan } from '@prisma/client'
 import { NotFound } from '../error/not-found.error'
-import type { BookRepository } from '@/repositories/book-repository'
 import type { LoanRepository } from '@/repositories/loan-repository'
 interface GetBorrowBookUseCaseRequest {
 userId:string

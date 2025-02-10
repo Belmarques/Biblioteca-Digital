@@ -30,5 +30,21 @@ export class PrismaLoanRepository implements LoanRepository {
     return await prisma.loan.findUnique({
       where: { id },
     });
- }
+  }
+  async getLoan(id: string) {
+    const loans = await prisma.loan.findMany({
+      where: { id },
+      include: {
+        book: true,
+      }
+    });
+    return loans.map((loan) => ({
+      id: loan.book.id,
+      titulo: loan.book.titulo,
+      disponibilidade: loan.book.disponibilidade,
+      authorId: loan.book.authorId,
+      genreId: loan.book.genreId
+    }) );
+    
+  }
 }
