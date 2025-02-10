@@ -1,0 +1,10 @@
+# Ignorar dependências e builds
+node_modules/
+build/
+dist/
+package-lock.json
+
+# Ignorar arquivos de ambiente
+.env
+.env.example
+
