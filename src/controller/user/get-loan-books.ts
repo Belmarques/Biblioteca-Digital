@@ -1,7 +1,5 @@
-import { PrismaBookRepository } from "@/repositories/prisma/prisma-book-repository";
 import { PrismaLoanRepository } from "@/repositories/prisma/prisma-loan-repository";
 import { PrismaUserRepository } from "@/repositories/prisma/prisma-users-repository";
-import { NotFound } from "@/use-case/error/not-found.error";
 import { GetLoanBookUseCase } from "@/use-case/loan/get-loan";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import { z } from "zod";

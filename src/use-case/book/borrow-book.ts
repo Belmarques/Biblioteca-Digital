@@ -31,7 +31,7 @@ export class BorrowBookUseCase {
       throw new Error('Book not found')
     }
     if(book.disponibilidade !== 'DISPONIVEL') {
-      throw new Error('Book not available for borrowing')
+      throw new Error('Livro Indisponível para empréstimo')
     }
      await this.loanRepository.create({
       bookId,

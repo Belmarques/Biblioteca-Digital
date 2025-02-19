@@ -51,8 +51,8 @@ export async function borrowBook(request: FastifyRequest, reply: FastifyReply) {
       return reply.status(404).send({ error: "Book not found" });
     }
 
-    if (error.message === "Book not available for borrowing") {
-      return reply.status(400).send({ error: "Book not available for borrowing" });
+    if (error.message === "Livro Indisponível para empréstimo") {
+      return reply.status(400).send({ error: "Livro Indisponivel para emprestimo" });
     }
 
     // Erros genéricos
