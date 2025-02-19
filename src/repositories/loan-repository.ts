@@ -5,6 +5,6 @@ export interface LoanRepository {
   findMany(id:string): Promise<Loan[]>;
   save(data:Loan): Promise<Loan>;
   findLoan(id:string): Promise<Loan | null>;
-  getLoan(id:string): Promise<Book[]>;
+  // getLoan(id:string): Promise<Book[]>;
 
 }
