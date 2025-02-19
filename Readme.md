@@ -16,8 +16,7 @@
     3. **Sistema de Empréstimos**:
     - **Emprestar livro**: Permitir que um usuário faça o empréstimo de um livro. Verificar se o livro está disponível e atualizar o status para "Indisponivel".✅
     - **Devolver livro**: Processar a devolução de um livro emprestado, atualizando seu status para "Disponivel".✅
-    - **Histórico de empréstimos do usuário**: Exibir uma lista de todos os empréstimos passados e presentes de um usuário. X
-    - **Renovar empréstimo**: Permitir que o usuário renove o prazo de um livro emprestado, se não houver reservas pendentes. X
+    - **Histórico de empréstimos do usuário**: Exibir uma lista de todos os empréstimos ativos e inativos de um usuário. ✅
 
     4. **Reservas de Livros**:
     - **Reservar livro**: Permitir que o usuário reserve um livro que está atualmente emprestado. X
