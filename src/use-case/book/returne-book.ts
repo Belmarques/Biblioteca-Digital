@@ -1,9 +1,8 @@
-
 import type { BookRepository } from '@/repositories/book-repository'
 import type { LoanRepository } from '@/repositories/loan-repository'
 
 interface ReturnBookCaseRequest {
-loanId:string
+  loanId: string
 }
 interface ReturnBookCaseResponse {
   message: string
@@ -11,29 +10,29 @@ interface ReturnBookCaseResponse {
 
 export class ReturnBookUseCase {
   constructor(
-   private loanRepository: LoanRepository,
-   private bookRepository: BookRepository
-  ) { }
+    private loanRepository: LoanRepository,
+    private bookRepository: BookRepository,
+  ) {}
 
   async execute({
-loanId
+    loanId,
   }: ReturnBookCaseRequest): Promise<ReturnBookCaseResponse> {
     const loan = await this.loanRepository.findLoan(loanId)
-    if(!loan) {
-      throw new Error('emprestimo nao encontrado')
+    if (!loan) {
+      throw new Error('Loan Not Found')
     }
-    if(loan.status !== 'ATIVO') {
+    if (loan.status !== 'ATIVO') {
       throw new Error('Book already returned')
     }
     await this.loanRepository.save({
       ...loan,
       returned_at: new Date(),
-      status: 'FINALIZADO'
+      status: 'FINALIZADO',
     })
 
-    await this.bookRepository.updatedBook(loan.bookId, {
-      disponibilidade: 'DISPONIVEL'
+    await this.bookRepository.updateBook(loan.bookId, {
+      disponibilidade: 'DISPONIVEL',
     })
-   return {message: "Book returned successfully"}
+    return { message: 'Book returned successfully' }
   }
 }

@@ -17,47 +17,54 @@ export class CreateBookUseCase {
   constructor(
     private bookRepository: BookRepository,
     private authorRepository: AuthorRepository,
-    private genreRepository: GenreRepository
-  ) { }
+    private genreRepository: GenreRepository,
+  ) {}
 
   async execute({
+    titulo,
     authorName,
     genreName,
-    titulo,
-    // disponibilidade,
   }: createBookUseCaseRequest): Promise<createBookUseCaseResponse> {
-
     let author = await this.authorRepository.findAuthor(authorName)
     if (!author) {
-     author = await this.authorRepository.create({
-        name: authorName
+      author = await this.authorRepository.create({
+        name: authorName,
       })
     }
-   
 
     let genre = await this.genreRepository.findGenre(genreName)
     if (!genre) {
-     genre = await this.genreRepository.create({
-        name: genreName
+      genre = await this.genreRepository.create({
+        name: genreName,
       })
     }
-  
+    const bookWithSameTitle = await this.bookRepository.findByTitle(titulo)
+    if (bookWithSameTitle.length > 0) {
+      throw new Error('Book already exists')
+    }
     const book = await this.bookRepository.create({
       titulo,
       author: {
-        connect: {
-          id: author.id
-        }
+        connectOrCreate: {
+          where: {
+            id: author.id,
+          },
+          create: {
+            name: author.name,
+          },
         },
-        genre: {
-          connect: {
-            id: genre.id
-          }
-        },
-      
       },
-    
-    )
+      genre: {
+        connectOrCreate: {
+          where: {
+            id: genre.id,
+          },
+          create: {
+            name: genre.name,
+          },
+        },
+      },
+    })
     return { book }
   }
 }

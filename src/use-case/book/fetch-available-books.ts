@@ -5,11 +5,11 @@ interface getBookUseCaseResponse {
   book: Book[]
 }
 
-export class GetBookUseCase {
+export class GetAvailableBooksUseCase {
   constructor(private bookRepository: BookRepository) {}
 
   async execute(): Promise<getBookUseCaseResponse> {
-    const book = await this.bookRepository.getAllBooks()
+    const book = await this.bookRepository.getAllAvailableBooks()
     return { book }
   }
 }

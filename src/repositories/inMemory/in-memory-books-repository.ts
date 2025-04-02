@@ -13,9 +13,9 @@
 //       author: data.author,
 //       genre: data.genre,
 //     };
-  
+
 //     this.items.push(book);
-  
+
 //     // Retorna o livro após inseri-lo
 //     return Promise.resolve(book)
 //   }
@@ -30,7 +30,5 @@
 //   }
 //   return book
 // }
-
-  
 
 // }

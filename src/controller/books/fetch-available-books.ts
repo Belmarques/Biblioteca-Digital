@@ -1,11 +1,14 @@
 import { PrismaBookRepository } from '@/repositories/prisma/prisma-book-repository'
-import { GetBookUseCase } from '@/use-case/book/get-book'
+import { GetAvailableBooksUseCase } from '@/use-case/book/fetch-available-books'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-export async function getBook(request: FastifyRequest, reply: FastifyReply) {
+export async function GetAvailableBooks(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   try {
     const bookRepository = new PrismaBookRepository()
-    const getBookUseCase = new GetBookUseCase(bookRepository)
+    const getBookUseCase = new GetAvailableBooksUseCase(bookRepository)
     const books = await getBookUseCase.execute()
 
     return reply.status(200).send(books)

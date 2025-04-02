@@ -38,7 +38,7 @@ enum LoanStatus {
 model Book {
   id              String          @id @default(uuid())
   titulo          String
-  author          Author          @relation(fields: [authorId], references: [id])
+  author          Author          @relation(fields: [authorId], references: [id], onDelete: Cascade)
   disponibilidade Disponibilidade @default(DISPONIVEL)
   authorId        String
   genre           Genre           @relation(fields: [genreId], references: [id])

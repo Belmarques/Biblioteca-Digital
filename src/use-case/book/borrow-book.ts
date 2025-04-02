@@ -1,11 +1,10 @@
-import type { Book } from '@prisma/client'
 import type { BookRepository } from '@/repositories/book-repository'
 import type { UserRepository } from '@/repositories/user-repository'
 import type { LoanRepository } from '@/repositories/loan-repository'
 
 interface BorrowBookUseCaseRequest {
-bookId: string,
-userId: string,
+  bookId: string
+  userId: string
 }
 interface BorrowBookUseCaseResponse {
   message: string
@@ -14,35 +13,36 @@ interface BorrowBookUseCaseResponse {
 export class BorrowBookUseCase {
   constructor(
     private bookRepository: BookRepository,
-   private loanRepository: LoanRepository,
-   private userRepository: UserRepository
-  ) { }
+    private loanRepository: LoanRepository,
+    private userRepository: UserRepository,
+  ) {}
 
   async execute({
-  bookId,
-  userId
+    bookId,
+    userId,
   }: BorrowBookUseCaseRequest): Promise<BorrowBookUseCaseResponse> {
     const user = await this.userRepository.findById(userId)
-    if(!user) {
+    if (!user) {
       throw new Error('User not found')
     }
     const book = await this.bookRepository.findById(bookId)
     if (!book) {
       throw new Error('Book not found')
     }
-    if(book.disponibilidade !== 'DISPONIVEL') {
+    if (book.disponibilidade !== 'DISPONIVEL') {
       throw new Error('Livro Indisponível para empréstimo')
     }
-     await this.loanRepository.create({
+    const returnedDate = new Date()
+    returnedDate.setDate(returnedDate.getDate() + 30)
+    await this.loanRepository.create({
       bookId,
       userId,
-      returned_at: new Date(new Date().setDate(new Date().getDate() + 30))
-      })
-      await this.bookRepository.updatedBook(bookId, {
-        disponibilidade: 'INDISPONIVEL',
+      returned_at: returnedDate,
+    })
+    await this.bookRepository.updateBook(bookId, {
+      disponibilidade: 'INDISPONIVEL',
+    })
 
-      })
-      
-      return {message: "Book borrowed successfully"}
+    return { message: 'Book borrowed successfully' }
   }
 }
