@@ -1,20 +1,26 @@
 import { PrismaBookRepository } from '@/repositories/prisma/prisma-book-repository'
-import { GetAvailableBooksUseCase } from '@/use-case/book/search-ready-book'
+import { SearchBookByTitleUseCase } from '@/use-case/book/search-book--by-title'
 import type { FastifyReply, FastifyRequest } from 'fastify'
+import { z } from 'zod'
 
 export async function searchByTitle(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
+  // Validação do título
+  const titleBoockSchema = z.object({
+    title: z.string().min(1, 'O título não pode estar vazio'), // Adicionando validação mínima
+  })
   try {
+    const { title } = titleBoockSchema.parse(request.query)
     // Instancia o repositório do Prisma
     const prismaBook = new PrismaBookRepository()
 
     // Instancia o caso de uso
-    const searchBook = new GetAvailableBooksUseCase(prismaBook)
+    const searchBook = new SearchBookByTitleUseCase(prismaBook)
 
     // Executa a busca
-    const { book } = await searchBook.execute()
+    const { book } = await searchBook.execute({ title })
 
     // Caso não encontre livros com o título informado
     if (!book || book.length === 0) {

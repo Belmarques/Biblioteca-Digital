@@ -4,6 +4,6 @@ export interface UserRepository {
   create(data: Prisma.UserCreateInput): Promise<User>
   findByEmail(email: string): Promise<User | null>
   findById(id: string): Promise<User | null>
-  // save(data: User): Promise<User>
+  save(userId: string, data: Prisma.UserUpdateInput): Promise<User>
   // findBook(id:string): Promise<Loan | null>
 }

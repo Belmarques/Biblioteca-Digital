@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import type { UserRepository } from '../user-repository'
-import type { User } from '@prisma/client'
+import type { Prisma, User } from '@prisma/client'
 
 export class PrismaUserRepository implements UserRepository {
   async findByEmail(email: string) {
@@ -24,6 +24,16 @@ export class PrismaUserRepository implements UserRepository {
       where: {
         id: userId,
       },
+    })
+    return user
+  }
+
+  async save(userId: string, data: Prisma.UserUpdateInput) {
+    const user = await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data,
     })
     return user
   }

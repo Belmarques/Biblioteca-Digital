@@ -36,7 +36,6 @@ app.register(fastifySwagger, {
 app.register(fastifySwaggerUi, {
   routePrefix: '/docs',
 })
-
 app.register(bookRouter)
 app.register(userRouter)
 app.register(authorRouter)

@@ -30,7 +30,7 @@ export class ReturnBookUseCase {
       status: 'FINALIZADO',
     })
 
-    await this.bookRepository.updateBook(loan.bookId, {
+    await this.bookRepository.updateAvailableBook(loan.bookId, {
       disponibilidade: 'DISPONIVEL',
     })
     return { message: 'Book returned successfully' }

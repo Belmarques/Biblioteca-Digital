@@ -31,7 +31,7 @@ export class UpdateBookUseCase {
         throw new Error('Id Invalido')
       }
       console.log(findId, 'ID')
-      const book = await this.bookRepository.updateBook(id, titulo)
+      const book = await this.bookRepository.updateTitle(id, titulo)
       console.log(book, 'Book')
       // Log informativo
       console.log(`Livro atualizado com sucesso: ${book.id}`)

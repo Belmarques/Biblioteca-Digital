@@ -1,5 +1,5 @@
 import { PrismaBookRepository } from '@/repositories/prisma/prisma-book-repository'
-import { GetAvailableBooksUseCase } from '@/use-case/book/fetch-available-books'
+import { GetAvailableBooksUseCase } from '@/use-case/book/search-ready-book'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function GetAvailableBooks(

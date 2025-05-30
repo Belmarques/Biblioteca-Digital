@@ -44,7 +44,7 @@ export class PrismaBookRepository implements BookRepository {
     })
   }
 
-  async updateBook(id: string, titulo: string) {
+  async updateTitle(id: string, titulo: string) {
     const book = await prisma.book.update({
       where: {
         id,
@@ -92,6 +92,16 @@ export class PrismaBookRepository implements BookRepository {
       where: {
         disponibilidade: 'DISPONIVEL',
       },
+    })
+    return book
+  }
+
+  async updateAvailableBook(id: string, data: Prisma.BookUncheckedUpdateInput) {
+    const book = await prisma.book.update({
+      where: {
+        id,
+      },
+      data,
     })
     return book
   }

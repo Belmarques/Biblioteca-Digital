@@ -39,7 +39,7 @@ export class BorrowBookUseCase {
       userId,
       returned_at: returnedDate,
     })
-    await this.bookRepository.updateBook(bookId, {
+    await this.bookRepository.updateAvailableBook(bookId, {
       disponibilidade: 'INDISPONIVEL',
     })
 

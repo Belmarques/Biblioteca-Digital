@@ -12,6 +12,7 @@ export async function createBook(request: FastifyRequest, reply: FastifyReply) {
       authorName: z.string(),
       genreName: z.string(),
     })
+    // const id = request.user.sub
 
     const { authorName, genreName, titulo } = createBookBodySchema.parse(
       request.body,

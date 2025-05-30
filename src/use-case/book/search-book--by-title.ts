@@ -1,20 +1,19 @@
 import { NotFound } from '../error/not-found.error'
 import type { Book } from '@prisma/client'
 import type { BookRepository } from '@/repositories/book-repository'
-
-interface SearchReadyBookUseCaseRequest {
+interface SearchBookByTitleRequest {
   title: string
 }
-interface SearchReadyBookUseCaseResponse {
+interface SearchBookByTitleResponse {
   book: Book[]
 }
 
-export class SearchReadyBookUseCase {
+export class SearchBookByTitleUseCase {
   constructor(private bookRepository: BookRepository) {}
 
   async execute({
     title,
-  }: SearchReadyBookUseCaseRequest): Promise<SearchReadyBookUseCaseResponse> {
+  }: SearchBookByTitleRequest): Promise<SearchBookByTitleResponse> {
     const book = await this.bookRepository.findByTitle(title)
     if (!book) {
       throw new NotFound()

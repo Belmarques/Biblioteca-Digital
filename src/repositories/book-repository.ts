@@ -11,5 +11,9 @@ export interface BookRepository {
   getAllAvailableBooks(): Promise<Book[]>
   findByTitle(titulo: string): Promise<Book[]>
   delete(id: string): Promise<void>
-  updateBook(id: string, title: string): Promise<Book>
+  updateTitle(id: string, title: string): Promise<Book>
+  updateAvailableBook(
+    id: string,
+    data: Prisma.BookUncheckedUpdateInput,
+  ): Promise<Book>
 }

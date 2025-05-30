@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { createBook } from './create-books'
 import { getBook } from './get-books'
-import { searchReady } from './search-ready-book'
+import { searchByTitle } from './search-ready-book'
 import { findBook } from './find-book'
 import { deleteBook } from './delete-book'
 import { updateBook } from './updated-book'
@@ -13,7 +13,25 @@ import { GetAvailableBooks } from './fetch-available-books'
 
 export async function bookRouter(app: FastifyInstance) {
   app.addHook('onRequest', verifyJWT)
-  app.post('/books', createBook) // Criar livro
+  app.post(
+    '/books',
+    {
+      schema: {
+        tags: ['Books'],
+        description: 'Criar Livro',
+        security: [{ bearerAuth: [] }],
+        body: {
+          type: 'object',
+          properties: {
+            titulo: { type: 'string' },
+            authorName: { type: 'string' },
+            genreName: { type: 'string' },
+          },
+        },
+      },
+    },
+    createBook,
+  ) // Criar livro
   app.get(
     '/books',
     {
@@ -39,16 +57,22 @@ export async function bookRouter(app: FastifyInstance) {
     GetAvailableBooks,
   ) // listar todos os livros Disponiveis
   app.get(
-    '/readybook',
+    '/books/search',
     {
       schema: {
         tags: ['Books'],
-        description: 'Listar livros disponiveis',
-        summary: 'Listar livros disponiveis',
+        description: 'Listar livros pelo titulo',
+        summary: 'Listar livros pelo titulo',
         security: [{ bearerAuth: [] }],
+        query: {
+          type: 'object',
+          properties: {
+            title: { type: 'string' },
+          },
+        },
       },
     },
-    searchReady,
+    searchByTitle,
   ) // Traz Livros Pelo Titulo
   app.get(
     '/books/:id',

@@ -13,14 +13,15 @@ enum Role {
 }
 
 model User {
-  id            String   @id @default(uuid())
+  id            String        @id @default(uuid())
   name          String
-  email         String   @unique
+  email         String        @unique
   password_hash String
   phone         String?
-  role          Role     @default(MEMBER)
-  created_at    DateTime @default(now())
+  role          Role          @default(MEMBER)
+  created_at    DateTime      @default(now())
   Loan          Loan[]
+  reservation   reservation[]
 
   @@map("users")
 }
@@ -44,6 +45,7 @@ model Book {
   genre           Genre           @relation(fields: [genreId], references: [id])
   genreId         String
   Loan            Loan[]
+  reservation     reservation[]
 
   @@map("books")
 }
@@ -71,4 +73,21 @@ model Loan {
   status      LoanStatus @default(ATIVO)
 
   @@map("loans")
+}
+
+enum StatusReservation {
+  PENDENTE
+  FINALIZADO
+}
+
+model reservation {
+  id         String            @id @default(uuid())
+  reservedAt DateTime          @default(now())
+  status     StatusReservation
+  user       User              @relation(fields: [userId], references: [id])
+  book       Book              @relation(fields: [bookId], references: [id])
+  userId     String
+  bookId     String
+
+  @@map("reservations")
 }
