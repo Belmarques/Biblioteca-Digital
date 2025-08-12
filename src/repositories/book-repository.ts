@@ -5,7 +5,7 @@ export interface BookRepository {
   findById(id: string): Promise<Book | null>
   getAllBooks(): Promise<Book[]>
   getAllAvailableBooks(): Promise<Book[]>
-  findByTitle(title: string): Promise<Book[]>
+  findByTitle(query: string): Promise<Book[]>
   delete(id: string): Promise<void>
   updateTitle(id: string, title: string): Promise<Book>
   updateAvailableBook(

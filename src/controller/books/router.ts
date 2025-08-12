@@ -64,12 +64,12 @@ export async function bookRouter(app: FastifyInstance) {
         description: 'Listar livros pelo titulo',
         summary: 'Listar livros pelo titulo',
         security: [{ bearerAuth: [] }],
-        query: {
+        querystring: {
           type: 'object',
-          required: ['query'],
           properties: {
             query: { type: 'string' },
           },
+          required: ['query'],
         },
       },
     },

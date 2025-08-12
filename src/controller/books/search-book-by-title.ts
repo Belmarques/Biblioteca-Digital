@@ -9,19 +9,19 @@ export async function searchByTitle(
 ) {
   // Validação do título
   const titleBoockSchema = z.object({
-    title: z.string().min(1, 'O título não pode estar vazio'), // Adicionando validação mínima
+    query: z.string().min(1, 'O título não pode estar vazio'), // Adicionando validação mínima
   })
   try {
-    const { title } = titleBoockSchema.parse(request.query)
+    const { query } = titleBoockSchema.parse(request.query)
     // Instancia o repositório do Prisma
-    console.log(title, 'titulo bu')
+    console.log(query, 'titulo bu')
     const prismaBook = new PrismaBookRepository()
 
     // Instancia o caso de uso
     const searchBook = new SearchBookByTitleUseCase(prismaBook)
     console.log(searchBook)
     // Executa a busca
-    const { book } = await searchBook.execute({ title })
+    const { book } = await searchBook.execute({ query })
 
     // Caso não encontre livros com o título informado
     if (!book || book.length === 0) {
