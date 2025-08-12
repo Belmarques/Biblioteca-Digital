@@ -1,3 +1,4 @@
+import { capitalizeWords } from '@/middleware/verifyCaracteres'
 import { PrismaAuthorRepository } from '@/repositories/prisma/prisma-author-repository'
 import { SearchAuthorUseCase } from '@/use-case/author/searchAuthor'
 import type { FastifyReply, FastifyRequest } from 'fastify'
@@ -12,11 +13,11 @@ export async function searchAuthor(
   })
 
   const { query } = searchAuthorSchema.parse(request.query)
-
+  const authorName = capitalizeWords(query)
   const prismaAuthor = new PrismaAuthorRepository()
   const searchAuthor = new SearchAuthorUseCase(prismaAuthor)
   const author = await searchAuthor.execute({
-    query,
+    query: authorName,
   })
 
   console.log(author)

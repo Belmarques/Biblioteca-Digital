@@ -57,11 +57,11 @@ export class PrismaBookRepository implements BookRepository {
     return book
   }
 
-  async findByTitle(titulo: string) {
+  async findByTitle(title: string) {
     const book = await prisma.book.findMany({
       where: {
         titulo: {
-          contains: titulo,
+          contains: title,
           mode: 'insensitive',
         },
       },

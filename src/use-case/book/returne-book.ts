@@ -21,6 +21,7 @@ export class ReturnBookUseCase {
     if (!loan) {
       throw new Error('Loan Not Found')
     }
+    console.log(loan)
     if (loan.status !== 'ATIVO') {
       throw new Error('Book already returned')
     }

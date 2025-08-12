@@ -11,7 +11,7 @@ export class PrismaAuthorRepository implements AuthorRepository {
     })
   }
 
-  async create(data: Prisma.AuthorCreateInput) {
+  async create(data: Prisma.AuthorUncheckedCreateInput) {
     const author = await prisma.author.create({
       data,
     })

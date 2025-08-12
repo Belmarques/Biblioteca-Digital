@@ -12,7 +12,6 @@ export async function searchByTitle(
 
     // Instancia o caso de uso
     const searchBook = new GetAvailableBooksUseCase(prismaBook)
-
     // Executa a busca
     const { book } = await searchBook.execute()
 

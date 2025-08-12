@@ -14,12 +14,8 @@ export async function borrowBook(request: FastifyRequest, reply: FastifyReply) {
       id: z.string().uuid('Invalid book ID format'),
     })
 
-    const borrowBookBodySchema = z.object({
-      userId: z.string(),
-    })
-
     const { id: bookId } = idSchema.parse(request.params)
-    const { userId } = borrowBookBodySchema.parse(request.body)
+    const userId = request.user.sub
 
     // Instancia os repositórios e caso de uso
     const bookRepository = new PrismaBookRepository()

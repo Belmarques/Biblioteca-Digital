@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { createBook } from './create-books'
 import { getBook } from './get-books'
-import { searchByTitle } from './search-ready-book'
+import { searchByTitle } from './search-book-by-title'
 import { findBook } from './find-book'
 import { deleteBook } from './delete-book'
 import { updateBook } from './updated-book'
@@ -66,8 +66,9 @@ export async function bookRouter(app: FastifyInstance) {
         security: [{ bearerAuth: [] }],
         query: {
           type: 'object',
+          required: ['query'],
           properties: {
-            title: { type: 'string' },
+            query: { type: 'string' },
           },
         },
       },
@@ -95,7 +96,7 @@ export async function bookRouter(app: FastifyInstance) {
   app.put(
     '/books/:id',
     {
-      onRequest: [verifyUserRole('ADMIN')],
+      onRequest: [verifyJWT, verifyUserRole('ADMIN')],
       schema: {
         tags: ['Books'],
         description: 'Atualizar livro',
@@ -150,13 +151,6 @@ export async function bookRouter(app: FastifyInstance) {
           properties: {
             id: { type: 'string' },
           },
-        },
-        body: {
-          type: 'object',
-          properties: {
-            userId: { type: 'string' },
-          },
-          required: ['userId'],
         },
       },
     },

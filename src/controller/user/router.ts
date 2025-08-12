@@ -56,18 +56,13 @@ export async function userRouter(app: FastifyInstance) {
     profile,
   ) // perfil do usuario
   app.get(
-    '/users/:id/return',
+    '/users/books',
     {
+      onRequest: [verifyJWT],
       schema: {
         tags: ['User'],
         description: 'Livros que o usuario pegou emprestado',
         security: [{ bearerAuth: [] }],
-        params: {
-          type: 'object',
-          properties: {
-            id: { type: 'string' },
-          },
-        },
       },
     },
     getBorrowBooks,

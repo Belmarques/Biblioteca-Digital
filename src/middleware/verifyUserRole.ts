@@ -1,10 +1,10 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
 export function verifyUserRole(roleToVerify: 'ADMIN' | 'MEMBER') {
-  return async (request: FastifyRequest, resply: FastifyReply) => {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
     const { role } = request.user
     if (role !== roleToVerify) {
-      return resply.status(401).send({ message: 'Unautorized' })
+      return reply.status(401).send({ message: 'Unautorized' })
     }
   }
 }

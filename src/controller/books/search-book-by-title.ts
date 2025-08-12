@@ -14,11 +14,12 @@ export async function searchByTitle(
   try {
     const { title } = titleBoockSchema.parse(request.query)
     // Instancia o repositório do Prisma
+    console.log(title, 'titulo bu')
     const prismaBook = new PrismaBookRepository()
 
     // Instancia o caso de uso
     const searchBook = new SearchBookByTitleUseCase(prismaBook)
-
+    console.log(searchBook)
     // Executa a busca
     const { book } = await searchBook.execute({ title })
 

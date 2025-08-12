@@ -42,7 +42,7 @@ model Book {
   author          Author          @relation(fields: [authorId], references: [id], onDelete: Cascade)
   disponibilidade Disponibilidade @default(DISPONIVEL)
   authorId        String
-  genre           Genre           @relation(fields: [genreId], references: [id])
+  genre           Genre           @relation(fields: [genreId], references: [id], onDelete: Cascade)
   genreId         String
   Loan            Loan[]
   reservation     reservation[]

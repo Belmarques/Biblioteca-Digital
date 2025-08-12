@@ -1,3 +1,4 @@
+import { capitalizeWords } from '@/middleware/verifyCaracteres'
 import { PrismaAuthorRepository } from '@/repositories/prisma/prisma-author-repository'
 import { PrismaBookRepository } from '@/repositories/prisma/prisma-book-repository'
 import { PrismaGenreRepository } from '@/repositories/prisma/prisma-genre-repository'
@@ -17,6 +18,9 @@ export async function createBook(request: FastifyRequest, reply: FastifyReply) {
     const { authorName, genreName, titulo } = createBookBodySchema.parse(
       request.body,
     )
+    const normalizedAuthorName = capitalizeWords(authorName)
+    const normalizedGenreName = capitalizeWords(genreName)
+
     console.log(authorName, genreName, titulo, 'body')
     const bookUser = new PrismaBookRepository()
     const authorUser = new PrismaAuthorRepository()
@@ -25,8 +29,8 @@ export async function createBook(request: FastifyRequest, reply: FastifyReply) {
     console.log(createBook, 'books')
     const book = await createBook.execute({
       titulo,
-      authorName,
-      genreName,
+      authorName: normalizedAuthorName,
+      genreName: normalizedGenreName,
     })
 
     return reply.status(201).send({ book })
