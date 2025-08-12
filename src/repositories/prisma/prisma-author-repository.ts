@@ -3,12 +3,20 @@ import type { AuthorRepository } from '../author-repository'
 import { prisma } from '@/lib/prisma'
 
 export class PrismaAuthorRepository implements AuthorRepository {
-  async findAuthor(id: string) {
-    return await prisma.author.findUnique({
+  async findAuthor(name: string) {
+    const author = await prisma.author.findFirst({
       where: {
-        id,
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        }
       },
+      
     })
+    if(!author) {
+     return null
+    }
+    return author
   }
 
   async create(data: Prisma.AuthorUncheckedCreateInput) {
@@ -30,7 +38,6 @@ export class PrismaAuthorRepository implements AuthorRepository {
         Book: {
           select: {
             titulo: true,
-            id: true,
             disponibilidade: true,
           },
         },
