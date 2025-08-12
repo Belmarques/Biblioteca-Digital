@@ -26,7 +26,22 @@ export class PrismaLoanRepository implements LoanRepository {
         userId: id,
       },
       include: {
-        book: true,
+        book: {
+          select: {
+            titulo: true,
+            disponibilidade: true,
+            author: {
+              select: {
+                name: true,
+              },
+            },
+            genre: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
       },
       orderBy: {
         barrowed_ad: 'desc',
